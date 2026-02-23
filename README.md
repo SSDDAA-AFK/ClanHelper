@@ -1,41 +1,55 @@
 # 🛡️ Clan Helper
 
-**Clan Helper** — це зручна портативна утиліта (WPF / .NET 8), створена для швидкого доступу та завантаження інструментів, які часто використовуються для кланових перевірок (Everything, SystemInformer та кастомні чекери). 
+**Clan Helper** is a convenient portable utility (WPF / .NET 8) designed for quick access and downloading of tools frequently used for clan checks (Everything, SystemInformer, and custom checkers). 
 
-Програма зібрана в один автономний `.exe` файл, що дозволяє запускати її без встановлення додаткових компонентів.
-
----
-
-## ✨ Основний функціонал
-
-- **📥 Швидке завантаження:** Завантажуйте необхідні утиліти (`.exe` файли) безпосередньо з програми у будь-яку зручну для вас папку.
-- **🌐 Доступ до офіційних сайтів:** Кнопки для швидкого переходу на сторінки розробників або останні релізи на GitHub.
-- **📁 Розумна навігація:** Після завантаження ви можете в один клік відкрити папку, куди було збережено конкретний файл.
-- **🎨 Кастомізація інтерфейсу:** - 8 вбудованих кольорових тем (Default Dark Blue, Orange, Midnight Purple, Ice Gray, Red Alert, Purple Neon, Forest, Solar Light).
-  - Динамічна фонова анімація (сніжинки, зірочки, листочки тощо), яка адаптується під обрану тему.
-  - Можливість вимкнути анімацію в налаштуваннях для економії ресурсів.
+The application is compiled into a single standalone `.exe` file, allowing it to be run instantly without installing any additional components or runtimes.
 
 ---
 
-## 🚀 Як користуватися
+## ✨ Key Features
 
-1. Завантажте останню версію `ClanHelper.exe` з розділу **[Releases](../../releases/latest)**.
-2. Запустіть файл (програма не потребує встановлення).
-3. Виберіть потрібну програму зі списку.
-4. Натисніть **"📥 Завантажити"**, оберіть папку на вашому ПК і дочекайтеся повідомлення про успішне збереження.
-5. Натисніть **"📁 Відкрити папку"**, щоб одразу перейти до завантаженого файлу.
+- **📥 Quick Downloads:** Download the necessary utilities (`.exe` files) directly from the app to any folder on your PC.
+- **🌐 Access to Official Sites:** Quick links to the developers' official web pages or the latest GitHub releases.
+- **📁 Smart Navigation:** Once a file is downloaded, you can open its destination folder with a single click.
+- **🎨 UI Customization:** - 8 built-in color themes.
+  - Dynamic background animations (snowflakes, stars, leaves, etc.) that adapt to the selected theme.
+  - Option to disable background animations in the settings to save system resources.
 
 ---
 
-## 🛠️ Для розробників (Як зібрати самостійно)
+## 🚀 How to Use
 
-Проект написаний на C# з використанням фреймворку WPF. 
+1. Download the latest version of `ClanHelper.exe` from the **[Releases](../../releases/latest)** section.
+2. Run the executable file (no installation required).
+3. Choose the required tool from the list.
+4. Click **"📥 Download"**, select a folder on your PC, and wait for the success message.
+5. Click **"📁 Open folder"** to navigate directly to the downloaded file in Windows Explorer.
 
-**Вимоги:**
+---
+
+## 🎨 Themes Showcase
+
+Here is a preview of the available built-in themes you can switch between in the settings:
+
+| Default Dark Blue | Orange | Midnight Purple | Ice Gray |
+| :---: | :---: | :---: | :---: |
+| ![Default Dark Blue](image/deff.png) | ![Orange](image/orange.png) | ![Midnight Purple](image/night.png) | ![Ice Gray](image/blek.png) |
+
+| Red Alert | Purple Neon | Forest | Solar Light |
+| :---: | :---: | :---: | :---: |
+| ![Red Alert](image/red.png) | ![Purple Neon](image/purpure.png) | ![Forest](image/green.png) | ![Solar Light](image/yellow.png) |
+
+---
+
+## 🛠️ For Developers (Build it yourself)
+
+This project is written in C# using the WPF framework.
+
+**Requirements:**
 - .NET 8.0 SDK
 
-**Збірка в один файл (Single-file executable):**
-Щоб скомпілювати проект у єдиний автономний `.exe` файл (який містить всі необхідні `.dll`), відкрийте термінал у папці проекту та виконайте команду:
+**Building a single-file executable:**
+To compile the project into a single standalone `.exe` file (which includes all necessary `.dll` libraries inside), open the terminal in the project folder and run the following command:
 
 ```bash
 dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
