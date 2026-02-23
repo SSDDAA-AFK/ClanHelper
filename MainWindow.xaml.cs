@@ -132,13 +132,14 @@ namespace ClanHelper
         private void OpenWebSite(string url)
         {
             try { Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true }); }
-            catch (Exception ex) { MessageBox.Show("Помилка: " + ex.Message); }
+            catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
         }
 
         // --- УНІВЕРСАЛЬНА ФУНКЦІЯ ЗАВАНТАЖЕННЯ ---
+        // --- УНІВЕРСАЛЬНА ФУНКЦІЯ ЗАВАНТАЖЕННЯ З ПРОГРЕС-БАРОМ ---
         private async Task DownloadFileAsync(string directUrl, string saveAsFileName)
         {
-            var dialog = new OpenFolderDialog { Title = $"Оберіть папку для збереження {saveAsFileName}" };
+            var dialog = new OpenFolderDialog { Title = $"Выберите папку для сохранения {saveAsFileName}" };
             
             if (dialog.ShowDialog() == true)
             {
@@ -147,27 +148,72 @@ namespace ClanHelper
 
                 try
                 {
-                    // Робимо курсор мишки у вигляді годинника (чекання)
                     Mouse.OverrideCursor = Cursors.Wait;
+                    
+                    // Показуємо прогрес-бар і скидаємо його на 0
+                    ProgressPanel.Visibility = Visibility.Visible;
+                    ProgressText.Text = $"Загрузка {saveAsFileName}... 0%";
+                    DownloadProgressBar.Value = 0;
 
                     using (HttpClient client = new HttpClient())
+                    // Робимо запит, але не вантажимо все одразу, а читаємо потік
+                    using (var response = await client.GetAsync(directUrl, HttpCompletionOption.ResponseHeadersRead))
                     {
-                        byte[] fileData = await client.GetByteArrayAsync(directUrl);
-                        await File.WriteAllBytesAsync(fullFilePath, fileData);
+                        response.EnsureSuccessStatusCode();
+                        
+                        // Дізнаємося загальний розмір файлу
+                        var totalBytes = response.Content.Headers.ContentLength;
+
+                        using (var contentStream = await response.Content.ReadAsStreamAsync())
+                        using (var fileStream = new FileStream(fullFilePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true))
+                        {
+                            var buffer = new byte[8192];
+                            var isMoreToRead = true;
+                            long totalRead = 0;
+
+                            do
+                            {
+                                // Читаємо "шматочок" файлу
+                                var read = await contentStream.ReadAsync(buffer, 0, buffer.Length);
+                                if (read == 0)
+                                {
+                                    isMoreToRead = false;
+                                }
+                                else
+                                {
+                                    // Записуємо цей шматочок на диск
+                                    await fileStream.WriteAsync(buffer, 0, read);
+                                    totalRead += read;
+                                    
+                                    // Рахуємо відсотки і оновлюємо прогрес-бар
+                                    if (totalBytes.HasValue)
+                                    {
+                                        double percentage = (double)totalRead / totalBytes.Value * 100;
+                                        DownloadProgressBar.Value = percentage;
+                                        ProgressText.Text = $"Загрузка {saveAsFileName}... {Math.Round(percentage)}%";
+                                    }
+                                }
+                            }
+                            while (isMoreToRead);
+                        }
                     }
                     
-                    // Зберігаємо шлях до папки, щоб кнопка "Папка" знала куди вести
                     savedFolders[saveAsFileName] = folderPath;
-                    MessageBox.Show($"Файл {saveAsFileName} успішно завантажено в папку:\n{folderPath}", "Готово", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
+                    // Невеличка пауза, щоб користувач побачив "100%", перш ніж вилізе віконце
+                    await Task.Delay(300); 
+                    
+                    MessageBox.Show($"Файл {saveAsFileName} успешно загружен!", "Сделано!", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Не вдалося завантажити файл. Перевірте посилання.\nПомилка: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Невозможно загрузить файл. Проверьте ссылку.\nОшибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 finally
                 {
-                    // Повертаємо нормальний курсор
                     Mouse.OverrideCursor = null;
+                    // Ховаємо прогрес-бар після завершення або помилки
+                    ProgressPanel.Visibility = Visibility.Collapsed;
                 }
             }
         }
@@ -177,11 +223,15 @@ namespace ClanHelper
         {
             if (savedFolders.ContainsKey(fileName))
             {
-                Process.Start("explorer.exe", savedFolders[fileName]);
+                // Склеюємо шлях до папки і назву файлу, щоб отримати повний шлях
+                string fullFilePath = Path.Combine(savedFolders[fileName], fileName);
+                
+                // Команда /select змушує провідник відкрити папку і одразу виділити потрібний файл
+                Process.Start("explorer.exe", $"/select,\"{fullFilePath}\"");
             }
             else
             {
-                MessageBox.Show("Ви ще не завантажували цей файл, тому папка невідома!", "Увага", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Вы еще не загружали этот файл, поэтому папка неизвестна!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -210,7 +260,7 @@ namespace ClanHelper
         private void EverythingFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("Everything.exe");
         private void SystemInformerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("SystemInformer.exe");
         private void EverythingChekerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("EverythingCheker.exe");
-        private void SystemInformerChekerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("SystemInformerCheker.exe");
+        private void SystemInformerChekerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("SystemInformerChecker.exe");
 
         // --- НАЛАШТУВАННЯ ---
         private void Settings_Click(object sender, RoutedEventArgs e) => SettingsPanel.Visibility = Visibility.Visible;
