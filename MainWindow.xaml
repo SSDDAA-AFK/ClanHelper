@@ -1,0 +1,84 @@
+﻿<Window x:Class="ClanHelper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Clan Helper" Height="400" Width="650" ResizeMode="NoResize" Icon="pack://application:,,,/app.ico"
+        Background="{DynamicResource BgBrush}">
+    
+    <Window.Resources>
+        <SolidColorBrush x:Key="BgBrush" Color="#0B132B"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#1C2541"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#3A506B"/> 
+        <SolidColorBrush x:Key="TextBrush" Color="White"/>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{DynamicResource CardBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource AccentBrush}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Canvas x:Name="ParticleCanvas" IsHitTestVisible="False"/>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Button Content="Everything (Сайт)" Click="Everything_Click" Width="220"/>
+                <Button Content="📥 Загрузить" Click="EverythingDL_Click" Width="130"/>
+                <Button Content="📁 Открыть папку" Click="EverythingFolder_Click" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Button Content="SystemInformer (Сайт)" Click="SystemInformer_Click" Width="220"/>
+                <Button Content="📥 Загрузить" Click="SystemInformerDL_Click" Width="130"/>
+                <Button Content="📁 Открыть папку" Click="SystemInformerFolder_Click" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Button Content="Everything Cheker (Сайт)" Click="EverythingCheker_Click" Width="220"/>
+                <Button Content="📥 Загрузить" Click="EverythingChekerDL_Click" Width="130"/>
+                <Button Content="📁 Открыть папку" Click="EverythingChekerFolder_Click" Width="150"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+                <Button Content="SystemInformer Cheker (Сайт)" Click="SystemInformerCheker_Click" Width="220"/>
+                <Button Content="📥 Загрузить" Click="SystemInformerChekerDL_Click" Width="130"/>
+                <Button Content="📁 Открыть папку" Click="SystemInformerChekerFolder_Click" Width="150"/>
+            </StackPanel>
+
+            <Button Content="⚙ Настройки" Click="Settings_Click" Width="220" Margin="0,10,0,0"/>
+        </StackPanel>
+
+        <Border x:Name="SettingsPanel" Background="{DynamicResource CardBrush}" Visibility="Collapsed" 
+                VerticalAlignment="Center" HorizontalAlignment="Center" 
+                Padding="20" CornerRadius="10">
+            <StackPanel>
+                <TextBlock x:Name="SettingsTitle" Text="Настройки" Foreground="{DynamicResource TextBrush}" FontSize="20" FontWeight="Bold" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+                <CheckBox x:Name="ParticlesToggle" Content="Анимация фона" Foreground="{DynamicResource TextBrush}" 
+                          IsChecked="True" Checked="Particles_Checked" Unchecked="Particles_Unchecked" 
+                          FontSize="16" Margin="0,0,0,15" 
+                          VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
+                <Button Content="Изменить тему" Click="Theme_Click"/>
+                <Button Content="Закрыть" Click="CloseSettings_Click" Background="{DynamicResource AccentBrush}" Margin="5,15,5,5"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
