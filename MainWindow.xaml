@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Clan Helper" Height="400" Width="650" ResizeMode="NoResize" Icon="pack://application:,,,/app.ico"
         Background="{DynamicResource BgBrush}">
+        <WindowChrome.WindowChrome >
+            <WindowChrome  />
+        </WindowChrome.WindowChrome>
     
     <Window.Resources>
         <SolidColorBrush x:Key="BgBrush" Color="#0B132B"/>
+        <SolidColorBrush x:Key="Titel" Color="#162450"/>
         <SolidColorBrush x:Key="CardBrush" Color="#1C2541"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#3A506B"/> 
         <SolidColorBrush x:Key="TextBrush" Color="White"/>
@@ -38,42 +42,77 @@
     <Grid>
         <Canvas x:Name="ParticleCanvas" IsHitTestVisible="False"/>
 
+        <Border Name="nameBorder" BorderBrush="{DynamicResource Titel}">
+            <Grid Background="{DynamicResource Titel}" Height="30" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/> 
+                    <ColumnDefinition Width="*"/>    
+                    <ColumnDefinition Width="Auto"/> 
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Grid.ColumnSpan="2" Background="Transparent" MouseLeftButtonDown="Header_Drag"/>
+
+                <Image Grid.Column="0" Source="pack://application:,,,/app.ico" Width="18" Height="18" Margin="10,0,0,0" HorizontalAlignment="Left" RenderOptions.BitmapScalingMode="HighQuality" IsHitTestVisible="False"/>
+                
+                <TextBlock x:Name="TitleText" Grid.Column="1" Foreground="#EAF0FF" FontSize="15" FontWeight="SemiBold" FontFamily="Consolas" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="4" Opacity="0.5" Color="Black"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+    
+                <StackPanel Grid.Column="2" Orientation="Horizontal" WindowChrome.IsHitTestVisibleInChrome="True">
+                    <Border Name="close" Width="47" Background="{DynamicResource Titel}" 
+                            PreviewMouseUp="header_PreviewMouseUp" PreviewMouseDown="header_PreviewMouseDown" 
+                            MouseLeave="header_MouseLeave" MouseEnter="header_MouseEnter">
+                        <Label Content="✕" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                               FontSize="14" FontFamily="Arial" Foreground="White" Padding="0"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button Content="Everything (Сайт)" Click="Everything_Click" Width="220"/>
-                <Button Content="📥 Загрузить" Click="EverythingDL_Click" Width="130"/>
-                <Button Content="📁 Открыть папку" Click="EverythingFolder_Click" Width="150"/>
+                <Button Content="Everything (Сайт)" Click="Everything_Click" Width="190"/>
+                <Button Content="📥 Скачать" Click="EverythingDL_Click" Width="100"/>
+                <Button Content="📁 Папка" Click="EverythingFolder_Click" Width="100"/>
+                <Button Content="▶ Запустить" Click="EverythingLaunch_Click" Width="110"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button Content="SystemInformer (Сайт)" Click="SystemInformer_Click" Width="220"/>
-                <Button Content="📥 Загрузить" Click="SystemInformerDL_Click" Width="130"/>
-                <Button Content="📁 Открыть папку" Click="SystemInformerFolder_Click" Width="150"/>
+                <Button Content="SystemInformer (Сайт)" Click="SystemInformer_Click" Width="190"/>
+                <Button Content="📥 Скачать" Click="SystemInformerDL_Click" Width="100"/>
+                <Button Content="📁 Папка" Click="SystemInformerFolder_Click" Width="100"/>
+                <Button Content="▶ Запустить" Click="SystemInformerLaunch_Click" Width="110"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button Content="Everything Cheker (Сайт)" Click="EverythingCheker_Click" Width="220"/>
-                <Button Content="📥 Загрузить" Click="EverythingChekerDL_Click" Width="130"/>
-                <Button Content="📁 Открыть папку" Click="EverythingChekerFolder_Click" Width="150"/>
+                <Button Content="Everything Checker (Сайт)" Click="EverythingCheker_Click" Width="190"/>
+                <Button Content="📥 Скачать" Click="EverythingChekerDL_Click" Width="100"/>
+                <Button Content="📁 Папка" Click="EverythingChekerFolder_Click" Width="100"/>
+                <Button Content="▶ Запустить" Click="EverythingChekerLaunch_Click" Width="110"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
-                <Button Content="SystemInformer Cheker (Сайт)" Click="SystemInformerCheker_Click" Width="220"/>
-                <Button Content="📥 Загрузить" Click="SystemInformerChekerDL_Click" Width="130"/>
-                <Button Content="📁 Открыть папку" Click="SystemInformerChekerFolder_Click" Width="150"/>
+                <Button Content="SysInformer Checker (Сайт)" Click="SystemInformerCheker_Click" Width="190"/>
+                <Button Content="📥 Скачать" Click="SystemInformerChekerDL_Click" Width="100"/>
+                <Button Content="📁 Папка" Click="SystemInformerChekerFolder_Click" Width="100"/>
+                <Button Content="▶ Запустить" Click="SystemInformerChekerLaunch_Click" Width="110"/>
             </StackPanel>
 
             <Button Content="⚙ Настройки" Click="Settings_Click" Width="220" Margin="0,10,0,0"/>
         </StackPanel>
 
+        <Border x:Name="DimOverlay" Background="Black" Opacity="0.45" Visibility="Collapsed" MouseLeftButtonDown="DimOverlay_MouseDown"/>
+
         <Border x:Name="SettingsPanel" Background="{DynamicResource CardBrush}" Visibility="Collapsed" 
                 VerticalAlignment="Center" HorizontalAlignment="Center" 
-                Padding="20" CornerRadius="10">
+                Padding="20" CornerRadius="20">               
             <StackPanel>
                 <TextBlock x:Name="SettingsTitle" Text="Настройки" Foreground="{DynamicResource TextBrush}" FontSize="20" FontWeight="Bold" Margin="0,0,0,15" HorizontalAlignment="Center"/>
-                <CheckBox x:Name="ParticlesToggle" Content="Анимация фона" Foreground="{DynamicResource TextBrush}" 
-                          IsChecked="True" Checked="Particles_Checked" Unchecked="Particles_Unchecked" 
+                <CheckBox x:Name="ParticlesToggle" Content="Включить анимации" Foreground="{DynamicResource TextBrush}" 
+                          Checked="Particles_Checked" Unchecked="Particles_Unchecked" 
                           FontSize="16" Margin="0,0,0,15" 
                           VerticalContentAlignment="Center" HorizontalAlignment="Center"/>
                 <Button Content="Изменить тему" Click="Theme_Click"/>
@@ -82,7 +121,7 @@
         </Border>
 
         <StackPanel x:Name="ProgressPanel" VerticalAlignment="Bottom" Margin="20" Visibility="Collapsed">
-            <TextBlock x:Name="ProgressText" Text="Завантаження..." Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" Margin="0,0,0,5" FontSize="14"/>
+            <TextBlock x:Name="ProgressText" Text="Загрузка..." Foreground="{DynamicResource TextBrush}" HorizontalAlignment="Center" Margin="0,0,0,5" FontSize="14"/>
             <ProgressBar x:Name="DownloadProgressBar" Height="10" Minimum="0" Maximum="100" 
                          Foreground="{DynamicResource AccentBrush}" 
                          Background="{DynamicResource CardBrush}" 
