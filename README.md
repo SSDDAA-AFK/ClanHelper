@@ -8,12 +8,16 @@ The application is compiled into a single standalone `.exe` file, allowing it to
 
 ## ✨ Key Features
 
-- **📥 Quick Downloads:** Download the necessary utilities (`.exe` files) directly from the app to any folder on your PC.
+- **▶️ Direct Launch:** Run your downloaded tools instantly with a single click directly from the app.
+- **📥 Smart Downloads:** Download necessary utilities (`.exe` files) to any folder. Features a real-time progress bar and smart duplicate protection (warns you if the file is already downloaded and offers to launch it instead).
+- **📁 Precise Navigation:** Clicking "Open folder" doesn't just open the directory—it automatically highlights the specific downloaded `.exe` file in Windows Explorer.
+- **💾 Auto-Save Configuration:** The app remembers your chosen theme, animation state, and download paths between sessions (saved locally in your Documents folder).
 - **🌐 Access to Official Sites:** Quick links to the developers' official web pages or the latest GitHub releases.
-- **📁 Smart Navigation:** Once a file is downloaded, you can open its destination folder with a single click.
-- **🎨 UI Customization:** - 8 built-in color themes.
-  - Dynamic background animations (snowflakes, stars, leaves, etc.) that adapt to the selected theme.
-  - Option to disable background animations in the settings to save system resources.
+- **🎨 Advanced UI Customization:** - **8 built-in color themes** with smooth, cinematic fade-in/fade-out transitions.
+  - **Custom Title Bar** that seamlessly blends with your active theme.
+  - **Dynamic animations:** Background particles (snowflakes, stars, etc.), typewriter text effects, and pulsing highlights.
+  - **Focus Mode:** A sleek dim overlay automatically darkens the background when the settings panel is opened.
+- **⚡ Eco Mode (For Low-End PCs):** Unchecking "Enable animations" instantly disables all background particles, text typing, and transitions, ensuring zero resource drain on weaker computers.
 
 ---
 
@@ -22,8 +26,8 @@ The application is compiled into a single standalone `.exe` file, allowing it to
 1. Download the latest version of `ClanHelper.exe` from the **[Releases](../../releases/latest)** section.
 2. Run the executable file (no installation required).
 3. Choose the required tool from the list.
-4. Click **"📥 Download"**, select a folder on your PC, and wait for the success message.
-5. Click **"📁 Open folder"** to navigate directly to the downloaded file in Windows Explorer.
+4. Click **"📥 Download"**, select a folder on your PC, and wait for the download progress to complete.
+5. Click **"▶ Launch"** to run the tool immediately, or **"📁 Open folder"** to locate the file on your drive.
 
 ---
 
