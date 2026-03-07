@@ -1,59 +1,102 @@
 # 🛡️ Clan Helper
 
-**Clan Helper** is a convenient portable utility (WPF / .NET 8) designed for quick access and downloading of tools frequently used for clan checks (Everything, SystemInformer, and custom checkers). 
+**Clan Helper** is a portable utility (WPF / .NET 8) for quick downloading and launching of tools commonly used for clan checks (Everything, SystemInformer, and custom checkers).
 
-The application is compiled into a single standalone `.exe` file, allowing it to be run instantly without installing any additional components or runtimes.
-
----
-
-## ✨ Key Features
-
-- **▶️ Direct Launch:** Run your downloaded tools instantly with a single click directly from the app.
-- **📥 Smart Downloads:** Download necessary utilities (`.exe` files) to any folder. Features a real-time progress bar and smart duplicate protection (warns you if the file is already downloaded and offers to launch it instead).
-- **📁 Precise Navigation:** Clicking "Open folder" doesn't just open the directory—it automatically highlights the specific downloaded `.exe` file in Windows Explorer.
-- **💾 Auto-Save Configuration:** The app remembers your chosen theme, animation state, and download paths between sessions (saved locally in your Documents folder).
-- **🌐 Access to Official Sites:** Quick links to the developers' official web pages or the latest GitHub releases.
-- **🎨 Advanced UI Customization:** - **8 built-in color themes** with smooth, cinematic fade-in/fade-out transitions.
-  - **Custom Title Bar** that seamlessly blends with your active theme.
-  - **Dynamic animations:** Background particles (snowflakes, stars, etc.), typewriter text effects, and pulsing highlights.
-  - **Focus Mode:** A sleek dim overlay automatically darkens the background when the settings panel is opened.
-- **⚡ Eco Mode (For Low-End PCs):** Unchecking "Enable animations" instantly disables all background particles, text typing, and transitions, ensuring zero resource drain on weaker computers.
+The application is distributed as a **single standalone `.exe`**, so it runs instantly without installation or additional runtimes.
 
 ---
 
-## 🚀 How to Use
+# ✨ Features
 
-1. Download the latest version of `ClanHelper.exe` from the **[Releases](../../releases/latest)** section.
-2. Run the executable file (no installation required).
-3. Choose the required tool from the list.
-4. Click **"📥 Download"**, select a folder on your PC, and wait for the download progress to complete.
-5. Click **"▶ Launch"** to run the tool immediately, or **"📁 Open folder"** to locate the file on your drive.
+- **▶️ Direct Launch** — run downloaded tools instantly from the app.
+- **📥 Smart Downloads** — download `.exe` tools to any folder with duplicate protection.
+- **📊 Advanced Download Manager**
+  - Shows **download speed (MB/s)** and **ETA**
+  - Smooth progress bar during downloads
+- **📁 Quick File Access** — "Open folder" highlights the downloaded `.exe` in Explorer.
+- **💾 Auto Configuration Save** — settings stored in  
+  `Documents/CHelper/config.json`.
+- **🌐 Official Links** — quick access to developer websites or GitHub releases.
 
 ---
 
-## 🎨 Themes Showcase
+# 🆕 New in v1.3
 
-Here is a preview of the available built-in themes you can switch between in the settings:
+### 🧩 Mini Mode
+Switch the app to a **compact widget view (180x180)** to keep it on the desktop without taking much space.
 
-| Default Dark Blue | Orange | Midnight Purple | Ice Gray |
+### 🔊 Startup Sounds
+A **random greeting sound** plays when the app launches.  
+This feature can be disabled in settings.
+
+### ✨ Icon Animation
+While the startup sound plays, the **title bar icon softly pulses**.
+
+---
+
+# 🎨 UI Customization
+
+- **8 built-in themes**
+- Smooth UI transitions
+- Custom title bar
+- Animated particles (snow, stars, etc.)
+- Typewriter text effects
+- Focus Mode (dim background when settings open)
+
+### ⚡ Eco Mode
+Disables animations, particles, and transitions for **better performance on low-end PCs**.
+
+---
+
+# ⚙️ Performance Improvements
+
+- Particle system moved from  
+`DispatcherTimer` → `CompositionTarget.Rendering`
+- Provides **smoother animations (~60 FPS)**.
+
+---
+
+# 🛠 Improvements & Fixes
+
+- More reliable config system (`Documents/CHelper/config.json`)
+- Automatic cleanup of corrupted or unfinished **sound/video files**
+- Fixed animation overlap when switching tabs quickly
+
+---
+
+# 🚀 How to Use
+
+1. Download **ClanHelper.exe** from **Releases**.
+2. Run the file (no installation required).
+3. Select a tool.
+4. Click **📥 Download** and choose a folder.
+5. Use **▶ Launch** to run or **📁 Open folder** to locate the file.
+
+---
+
+# 🎨 Themes
+
+| Default | Orange | Midnight Purple | Ice Gray |
 | :---: | :---: | :---: | :---: |
-| ![Default Dark Blue](image/deff.png) | ![Orange](image/orange.png) | ![Midnight Purple](image/night.png) | ![Ice Gray](image/blek.png) |
+| ![](image/deff.png) | ![](image/orange.png) | ![](image/night.png) | ![](image/blek.png) |
 
 | Red Alert | Purple Neon | Forest | Solar Light |
 | :---: | :---: | :---: | :---: |
-| ![Red Alert](image/red.png) | ![Purple Neon](image/purpure.png) | ![Forest](image/green.png) | ![Solar Light](image/yellow.png) |
+| ![](image/red.png) | ![](image/purpure.png) | ![](image/green.png) | ![](image/yellow.png) |
 
 ---
 
-## 🛠️ For Developers (Build it yourself)
+# 🛠 Build (for developers)
 
-This project is written in C# using the WPF framework.
+Requirements:
+- **.NET 8 SDK**
 
-**Requirements:**
-- .NET 8.0 SDK
-
-**Building a single-file executable:**
-To compile the project into a single standalone `.exe` file (which includes all necessary `.dll` libraries inside), open the terminal in the project folder and run the following command:
+Build a single executable:
 
 ```bash
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+dotnet publish -c Release -r win-x64 --self-contained true \
+-p:PublishSingleFile=true \
+-p:IncludeNativeLibrariesForSelfExtract=true
+```
+
+Developer: SSDDAA-AFK
