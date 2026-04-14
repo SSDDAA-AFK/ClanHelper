@@ -84,6 +84,13 @@
         <StackPanel x:Name="MainContentPanel" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Button Content="Everything Checker (Сайт)" Click="EverythingCheker_Click" Width="190"/>
+                <Button Content="📥 Скачать" Click="EverythingChekerDL_Click" Width="100"/>
+                <Button Content="📁 Папка" Click="EverythingChekerFolder_Click" Width="100"/>
+                <Button Content="▶ Запустить" Click="EverythingChekerLaunch_Click" Width="110"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
                 <Button Content="Everything (Сайт)" Click="Everything_Click" Width="190"/>
                 <Button Content="📥 Скачать" Click="EverythingDL_Click" Width="100"/>
                 <Button Content="📁 Папка" Click="EverythingFolder_Click" Width="100"/>
@@ -97,18 +104,11 @@
                 <Button Content="▶ Запустить" Click="SystemInformerLaunch_Click" Width="110"/>
             </StackPanel>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button Content="Everything Checker (Сайт)" Click="EverythingCheker_Click" Width="190"/>
-                <Button Content="📥 Скачать" Click="EverythingChekerDL_Click" Width="100"/>
-                <Button Content="📁 Папка" Click="EverythingChekerFolder_Click" Width="100"/>
-                <Button Content="▶ Запустить" Click="EverythingChekerLaunch_Click" Width="110"/>
-            </StackPanel>
-
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
-                <Button Content="SysInformer Checker (Сайт)" Click="SystemInformerCheker_Click" Width="190"/>
-                <Button Content="📥 Скачать" Click="SystemInformerChekerDL_Click" Width="100"/>
-                <Button Content="📁 Папка" Click="SystemInformerChekerFolder_Click" Width="100"/>
-                <Button Content="▶ Запустить" Click="SystemInformerChekerLaunch_Click" Width="110"/>
+                <Button Content="Shellbag Analyzer (Сайт)" Click="ShellbagAnalyzer_Click" Width="190"/>
+                <Button Content="📥 Скачать" Click="ShellbagAnalyzerDL_Click" Width="100"/>
+                <Button Content="📁 Папка" Click="ShellbagAnalyzerFolder_Click" Width="100"/>
+                <Button Content="▶ Запустить" Click="ShellbagAnalyzerLaunch_Click" Width="110"/>
             </StackPanel>
 
             <Button Content="⚙ Настройки" Click="Settings_Click" Width="220" Margin="0,10,0,0"/>
@@ -116,12 +116,12 @@
 
         <StackPanel x:Name="MiniContentPanel" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                <Button Content="EC" ToolTip="Everything Checker (Запуск)" Click="EverythingChekerLaunch_Click" Width="40" Height="40" FontSize="16" FontWeight="Bold"/>
                 <Button Content="E" ToolTip="Everything (Запуск)" Click="EverythingLaunch_Click" Width="40" Height="40" FontSize="18" FontWeight="Bold"/>
-                <Button Content="SI" ToolTip="SystemInformer (Запуск)" Click="SystemInformerLaunch_Click" Width="40" Height="40" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button Content="EC" ToolTip="Everything Checker (Запуск)" Click="EverythingChekerLaunch_Click" Width="40" Height="40" FontSize="16" FontWeight="Bold"/>
-                <Button Content="SIC" ToolTip="SysInformer Checker (Запуск)" Click="SystemInformerChekerLaunch_Click" Width="40" Height="40" FontSize="14" FontWeight="Bold"/>
+                <Button Content="SI" ToolTip="SystemInformer (Запуск)" Click="SystemInformerLaunch_Click" Width="40" Height="40" FontSize="18" FontWeight="Bold"/>
+                <Button Content="SA" ToolTip="Shellbag Analyzer (Запуск)" Click="ShellbagAnalyzerLaunch_Click" Width="40" Height="40" FontSize="14" FontWeight="Bold"/>
             </StackPanel>
         </StackPanel>
 

@@ -24,7 +24,6 @@ using Color = System.Windows.Media.Color;
 using Brush = System.Windows.Media.Brush;
 using Brushes = System.Windows.Media.Brushes;
 using FontFamily = System.Windows.Media.FontFamily;
-using System.IO;
 
 namespace ClanHelper
 {
@@ -42,31 +41,31 @@ namespace ClanHelper
         [DllImport("user32.dll")]
         public static extern bool BlockInput(bool fBlockIt);
 
-        private DispatcherTimer timer;
-        private List<TextBlock> particles;
+        private DispatcherTimer? timer;
+        private List<TextBlock> particles = new List<TextBlock>();
         private Random random = new Random();
-        private Storyboard pulseStoryboard;
+        private Storyboard? pulseStoryboard;
         private bool isTitleAnimating = true;
         
         private Dictionary<string, string> savedFolders = new Dictionary<string, string>();
         private AppSettings appSettings = new AppSettings();
         private bool isInitializing = true; // Защита от багов при запуске
 
-        private MediaPlayer startupSoundPlayer; // Плеєр для стартового звуку
+        private MediaPlayer? startupSoundPlayer; // Плеєр для стартового звуку
 
         private class AppTheme
         {
-            public string Name { get; set; }
-            public string Bg { get; set; }
-            public string Title { get; set; }
-            public string Card { get; set; }
-            public string Accent { get; set; }
-            public string Text { get; set; }
-            public string ParticleSymbol { get; set; }
-            public string ParticleColor { get; set; }
+            public string Name { get; set; } = "";
+            public string Bg { get; set; } = "";
+            public string Title { get; set; } = "";
+            public string Card { get; set; } = "";
+            public string Accent { get; set; } = "";
+            public string Text { get; set; } = "";
+            public string ParticleSymbol { get; set; } = "";
+            public string ParticleColor { get; set; } = "";
         }
 
-        private List<AppTheme> themes;
+        private List<AppTheme> themes = new List<AppTheme>();
         private int currentThemeIndex = 0;
 
         public MainWindow()
@@ -566,14 +565,20 @@ namespace ClanHelper
             else MessageBox.Show("Вы еще не загружали этот файл!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
-        private void LaunchSavedFile(string fileName)
+        private void LaunchSavedFile(string fileName, Button launchButton = null)
         {
             if (savedFolders.ContainsKey(fileName))
             {
                 string fullFilePath = Path.Combine(savedFolders[fileName], fileName);
                 if (File.Exists(fullFilePath))
                 {
-                    try { Process.Start(new ProcessStartInfo { FileName = fullFilePath, UseShellExecute = true }); }
+                    try 
+                    { 
+                        if (launchButton != null && launchButton.Content.ToString().Contains("Запустить"))
+                            launchButton.Content = "▶ Запуск";
+
+                        Process.Start(new ProcessStartInfo { FileName = fullFilePath, UseShellExecute = true }); 
+                    }
                     catch (Exception ex) { MessageBox.Show("Не удалось запустить файл: " + ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error); }
                 }
                 else MessageBox.Show("Файл не найден! Возможно, он был удален.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -591,25 +596,25 @@ namespace ClanHelper
         private void Everything_Click(object sender, RoutedEventArgs e) => OpenWebSite("https://www.voidtools.com/");
         private void SystemInformer_Click(object sender, RoutedEventArgs e) => OpenWebSite("https://systeminformer.sourceforge.io/");
         private void EverythingCheker_Click(object sender, RoutedEventArgs e) => OpenWebSite("https://github.com/SSDDAA-AFK/Everything_cheker/releases/latest");
-        private void SystemInformerCheker_Click(object sender, RoutedEventArgs e) => OpenWebSite("https://github.com/SSDDAA-AFK/SustemInformer_Cheker/releases/latest");
+        private void ShellbagAnalyzer_Click(object sender, RoutedEventArgs e) => OpenWebSite("https://privazer.com/en/download-shellbag-analyzer-shellbag-cleaner.php");
 
         // --- КНОПКИ ЗАГРУЗОК ---
         private async void EverythingDL_Click(object sender, RoutedEventArgs e) => await DownloadFileAsync("https://www.voidtools.com/Everything-1.4.1.1032.x64-Setup.exe", "Everything.exe");
         private async void SystemInformerDL_Click(object sender, RoutedEventArgs e) => await DownloadFileAsync("https://deac-riga.dl.sourceforge.net/project/systeminformer/systeminformer-3.2.25011-release-setup.exe?viasf=1", "SystemInformer.exe");
-        private async void EverythingChekerDL_Click(object sender, RoutedEventArgs e) => await DownloadFileAsync("https://github.com/SSDDAA-AFK/Everything_cheker/releases/download/v1.1/Everything_cheker.exe", "EverythingCheker.exe");
-        private async void SystemInformerChekerDL_Click(object sender, RoutedEventArgs e) => await DownloadFileAsync("https://github.com/SSDDAA-AFK/SustemInformer_Cheker/releases/download/v1.1/SystemInformerChecker.exe", "SystemInformerChecker.exe");
+        private async void EverythingChekerDL_Click(object sender, RoutedEventArgs e) => await DownloadFileAsync("https://github.com/SSDDAA-AFK/Everything_cheker/releases/download/v2.0/Everything_cheker.exe", "EverythingCheker.exe");
+        private async void ShellbagAnalyzerDL_Click(object sender, RoutedEventArgs e) => await DownloadFileAsync("https://privazer.com/en/shellbag_analyzer_cleaner.exe", "ShellbagAnalyzer.exe");
 
         // --- КНОПКИ ПАПОК ---
         private void EverythingFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("Everything.exe");
         private void SystemInformerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("SystemInformer.exe");
         private void EverythingChekerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("EverythingCheker.exe");
-        private void SystemInformerChekerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("SystemInformerChecker.exe");
+        private void ShellbagAnalyzerFolder_Click(object sender, RoutedEventArgs e) => OpenSavedFolder("ShellbagAnalyzer.exe");
 
         // --- КНОПКИ ЗАПУСКА ---
-        private void EverythingLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("Everything.exe");
-        private void SystemInformerLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("SystemInformer.exe");
-        private void EverythingChekerLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("EverythingCheker.exe");
-        private void SystemInformerChekerLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("SystemInformerChecker.exe");
+        private void EverythingLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("Everything.exe", sender as Button);
+        private void SystemInformerLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("SystemInformer.exe", sender as Button);
+        private void EverythingChekerLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("EverythingCheker.exe", sender as Button);
+        private void ShellbagAnalyzerLaunch_Click(object sender, RoutedEventArgs e) => LaunchSavedFile("ShellbagAnalyzer.exe", sender as Button);
 
         // --- ИНТЕРФЕЙС И КАСТОМНЫЙ ЗАГОЛОВОК ---
         private void Settings_Click(object sender, RoutedEventArgs e) 
